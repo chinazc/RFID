@@ -1,0 +1,327 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    tools:context="com.WorldCloud.assetsrfid.AssetsFaultManageActivity" >
+
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical" >
+
+			<include layout="@layout/main_title"/>
+
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content" 
+			    android:background="@color/white">
+
+				<LinearLayout
+				    android:layout_width="300dp"
+				    android:layout_height="1000dp"
+				    android:layout_margin="10dp"
+				    android:background="@color/white"
+				    android:orientation="vertical" >
+
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:layout_marginTop="10dp" >
+
+						<ImageView
+						    android:id="@+id/imageViewFaultManage"
+						    android:layout_width="80dp"
+						    android:layout_height="80dp"
+						    android:layout_marginLeft="10dp"
+						    android:src="@drawable/icon_workrequest" />
+
+						<LinearLayout
+						    android:layout_width="fill_parent"
+						    android:layout_height="match_parent"
+						    android:layout_marginRight="10dp"
+						    android:orientation="vertical" >
+
+							<TextView
+							    android:id="@+id/textView1"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_gravity="right"
+							    android:text="故障缺陷"
+							    android:textColor="@color/darkgray"
+							    android:textSize="30sp" />
+
+							<TextView
+							    android:id="@+id/textViewDialogMessage"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_gravity="right"
+							    android:text="工作请求管理"
+							    android:textColor="@color/darkgray"
+							    android:textSize="30sp" />
+
+						</LinearLayout>
+
+					</LinearLayout>
+
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:layout_marginTop="10dp" >
+
+					    <TextView
+					        android:id="@+id/textView5"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:text="按资产编号搜索"
+					        android:textColor="@color/deepskyblue"
+					        android:textSize="25sp" />
+
+					</LinearLayout>
+
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="42dp"
+					    android:layout_marginTop="5dp"
+					    android:background="@drawable/frameround" >
+
+					    <TextView
+					        android:id="@+id/textViewInputErCode"
+					        android:layout_width="222dp"
+					        android:layout_height="wrap_content"
+					        android:layout_gravity="center"
+					        android:layout_weight="0.43"
+					        android:layout_marginLeft="10dp"
+					        android:hint="@string/input_er_code"
+					        android:textSize="15sp" />
+
+					    <ImageView
+					        android:id="@+id/imageViewInputErCode"
+					        android:layout_width="30dp"
+					        android:layout_height="match_parent"
+					        android:layout_gravity="right"
+					        android:layout_marginRight="10dp"
+					        android:onClick="onClickRFIDSet"
+					        android:src="@drawable/erweima" />
+					</LinearLayout>
+
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content" >
+
+						<TextView
+						    android:id="@+id/textView6"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_marginTop="10dp"
+						    android:text="其它查询条件"
+						    android:textColor="@color/deepskyblue"
+						    android:textSize="25sp" />
+
+					</LinearLayout>
+
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:background="@drawable/frameround"
+					    android:orientation="vertical" >
+
+						<LinearLayout
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content" >
+
+							<TextView
+							    android:id="@+id/textViewRequestID"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="10dp"
+							    android:text="申请编号"
+							    />
+
+							<Button
+							    android:id="@+id/buttonIDAll"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="100dp"
+							    android:text="全部" />
+
+							<ImageView
+							    android:id="@+id/imageView2"
+							    android:layout_width="25dp"
+							    android:layout_height="44dp"
+							    android:src="@drawable/icon_forward" />
+
+						</LinearLayout>
+						<LinearLayout
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content" >
+
+							<TextView
+							    android:id="@+id/textViewDepartment"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="10dp"
+							    android:text="负责部门"/>
+
+							<Button
+							    android:id="@+id/buttonDepartment"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="100dp"
+							    android:text="全部" />
+
+							<ImageView
+							    android:id="@+id/imageView5"
+							    android:layout_width="25dp"
+							    android:layout_height="50dp"
+							    android:src="@drawable/icon_forward" />
+
+						</LinearLayout>
+												<LinearLayout
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content" >
+
+							<TextView
+							    android:id="@+id/textViewRequestType"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="10dp"
+							    android:text="申请类型" />
+
+							<Button
+							    android:id="@+id/buttonTypeAll"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="100dp"
+							    android:text="全部" />
+
+							<ImageView
+							    android:id="@+id/imageView3"
+							    android:layout_width="25dp"
+							    android:layout_height="50dp"
+							    android:src="@drawable/icon_forward" />
+
+						</LinearLayout>
+						<LinearLayout
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content" >
+
+							<TextView
+							    android:id="@+id/textViewFunctionLocation"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="10dp"
+							    android:text="功能位置" />
+
+							<Button
+							    android:id="@+id/buttonFunctionLocation"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="100dp"
+							    android:text="全部" />
+
+							<ImageView
+							    android:id="@+id/imageView6"
+							    android:layout_width="25dp"
+							    android:layout_height="50dp"
+							    android:src="@drawable/icon_forward" />
+
+						</LinearLayout>
+
+						<LinearLayout
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content" >
+
+							<TextView
+							    android:id="@+id/textViewStatus"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="10dp"
+							    android:text="当前状态" />
+
+							<Button
+							    android:id="@+id/buttonStatus"
+							    android:layout_width="wrap_content"
+							    android:layout_height="wrap_content"
+							    android:layout_marginLeft="100dp"
+							    android:text="全部" />
+
+							<ImageView
+							    android:id="@+id/imageView7"
+							    android:layout_width="25dp"
+							    android:layout_height="50dp"
+							    android:src="@drawable/icon_forward" />
+
+						</LinearLayout>
+																		
+					</LinearLayout>
+
+					<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:layout_marginTop="10dp" >
+
+						<Button
+						    android:id="@+id/buttonFaultExecQuery"
+						    android:layout_width="154dp"
+						    android:layout_height="wrap_content"
+						    android:background="@drawable/normal_button"
+						    android:text="执行搜索" />
+
+						<Button
+						    android:id="@+id/buttonReset"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:background="@drawable/normal_button"
+						    android:text="清空条件" />
+
+					</LinearLayout>
+
+				</LinearLayout>
+
+				<LinearLayout
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
+				    android:layout_margin="10dp"
+				    android:background="@color/lightgray"
+				    android:orientation="vertical" >
+
+					<TextView
+					    android:id="@+id/textViewMessage"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_margin="10dp"
+					    android:text="@string/query_itemcount_message"
+					    android:textSize="20sp"  />
+
+<LinearLayout
+					    android:layout_width="match_parent"
+					    android:layout_height="fill_parent"
+					    android:layout_margin="10dp"
+					    android:layout_marginTop="10dp" >
+
+						<ScrollView
+						    android:id="@+id/scrollViewFaultRecord"
+						    android:layout_width="fill_parent"
+						    android:layout_height="fill_parent"
+						    android:background="@color/lightgray" >
+							<LinearLayout 
+							    android:id="@+id/fualtRecord"
+							    android:layout_width="fill_parent"
+						        android:layout_height="fill_parent"
+						        android:orientation="vertical"
+							    ></LinearLayout>
+						</ScrollView>
+
+					</LinearLayout>
+					    
+					
+
+					
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</LinearLayout>
+    
+</RelativeLayout>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 用户负责的客户 -->
+    <string name="sql_order_customer">	select c.cust_id, c.cust_code, c.cust_short_name, 
+	( select total(order_count) from (
+	select count(ot.ORDER_ID) as order_count  from ORDER_TABLE ot where ot.ACTIVE=\'1\' and ot.CREATE_QTY!=0 and ot.CUST_ID=c.cust_id and ot.CREATE_DT like ? and ot.ARRIVAL_DT=? 
+	union all 
+	select count(op.ORDER_ID) as order_count  from ORDER_PRESENT op where op.ACTIVE=\'1\' and op.CREATE_QTY!=0 and op.CUST_ID=c.cust_id and op.CREATE_DT like ? and op.ARRIVAL_DT=? 
+	)) as order_count, 
+	( select total(sync_flag) from (
+	select total(ot.SYNC_FLAG) as sync_flag  from ORDER_TABLE ot where ot.ACTIVE=\'1\' and ot.CUST_ID=c.cust_id and ot.CREATE_DT like ? and ot.ARRIVAL_DT=? 
+	union all 
+	select total(op.SYNC_FLAG) as sync_flag  from ORDER_PRESENT op where op.ACTIVE=\'1\' and op.CUST_ID=c.cust_id and op.CREATE_DT like ? and op.ARRIVAL_DT=? 
+	)) as sync_flag, 
+	( select total(amount) from (
+		select ot.CREATE_QTY * 
+		(select pl.LIST_PRICE from PRICE_LIST pl 
+		inner join CUSTOMER c1 on c1.price_list_id=pl.PRICE_LIST_ID and c1.cust_id=c.cust_id 
+		where pl.PRODUCT_ID=p.PRODUCT_CODE and pl.UNIT_CODE=p.unit_code ) as amount 
+		from ORDER_TABLE ot 
+		left join PRODUCT p on p.ACTIVE=\'1\' and p.PRODUCT_ID=ot.PRODUCT_ID 
+		where ot.ACTIVE=\'1\' and ot.CUST_ID=c.cust_id and ot.CREATE_DT like ? and ot.ARRIVAL_DT=? )) as order_amount 
+	from CUSTOMER c 
+	where c.active=\'1\' and c.status=\'1\' 
+	order by c.cust_short_name asc </string>
+
+    <!-- 订单选择界面，相关订单数据 -->
+    <string name="sql_order_customer_order_no">        select ot.ORDER_NO as ORDER_NO, ot.REMARK as REMARK, ot.SYNC_FLAG as SYNC_FLAG from ORDER_TABLE ot where ot.ACTIVE=\'1\' and ot.CUST_ID=? and ot.ARRIVAL_DT=? and ot.CREATE_DT like ? 
+		union
+		select op.ORDER_NO as ORDER_NO, op.REMARK as REMARK, op.SYNC_FLAG as SYNC_FLAG from ORDER_PRESENT op where op.ACTIVE=\'1\' and op.CUST_ID=? and op.ARRIVAL_DT=? and op.CREATE_DT like ? </string>
+
+    <!-- 订单类型 -->
+    <string name="sql_order_type">        select sp.SYS_KEY2 as sk2, sp.SYS_VALUE as sv from SYS_PARM sp where sp.SYS_KEY1=\'017\' order by sp.SYS_KEY2 asc </string>
+
+    <!-- 产品大类 -->
+    <string name="sql_order_product_parent_category">        select pc.CATEGORY_ID as cid, pc.CATEGORY_NAME as cname from PRODUCT_CATEGORY pc where pc.ACTIVE=\'1\' and pc.PARENT_CATEGORY_ID=\'*\' order by pc.CATEGORY_NAME asc</string>
+
+    <!-- 产品小类 -->
+    <string name="sql_order_product_category">        select pc.CATEGORY_ID as cid, pc.CATEGORY_NAME as cname from PRODUCT_CATEGORY pc where pc.ACTIVE=\'1\' and pc.PARENT_CATEGORY_ID=? order by pc.CATEGORY_NAME asc</string>
+
+    <!-- 所有产品 -->
+    <string name="sql_all_product">        select p.PRODUCT_ID as pid, p.PRODUCT_CODE as pcode, p.PRODUCT_NAME as pname, p.PRODUCT_S_NAME as psname, 
+		p.CATEGORY1 as pcategory, p.CATEGORY2 as category, p.UNIT_CODE as unitname, p.SPECIFICATION as unit  
+		from PRODUCT p where p.ACTIVE=\'1\' and (p.STATUS=\'1\' or p.STATUS is null) 
+		order by p.category1,p.category2,p.PRODUCT_S_NAME desc </string>
+
+    <!-- 此客户出售的产品 -->
+    <string name="sql_product_by_customer">        select p.PRODUCT_ID as pid, p.PRODUCT_CODE as pcode, p.PRODUCT_NAME as pname, p.PRODUCT_S_NAME as psname, 
+		p.CATEGORY1 as pcategory, p.CATEGORY2 as category, p.UNIT_CODE as unitname, p.SPECIFICATION as unit  
+		from PRICE_LIST pl 
+		inner join CUSTOMER c on c.ACTIVE=\'1\' and c.PRICE_LIST_ID=pl.PRICE_LIST_ID and c.CUST_ID=? 
+		inner join PRODUCT p on p.ACTIVE=\'1\' and (p.STATUS=\'1\' or p.STATUS is null) and p.PRODUCT_CODE=pl.PRODUCT_ID and p.unit_code=pl.UNIT_CODE 
+		group by p.PRODUCT_ID, p.PRODUCT_CODE, p.PRODUCT_NAME, p.PRODUCT_S_NAME, 
+		p.CATEGORY1, p.CATEGORY2, p.UNIT_CODE, p.SPECIFICATION 
+		order by p.category1,p.category2,p.PRODUCT_S_NAME desc </string>
+
+    <!-- 修改产品之前输入的值 -->
+    <string name="sql_product_last_data">        select ? as ZP_TYPE, ot.PRODUCT_ID as PRODUCT_ID, ot.CREATE_QTY as CREATE_QTY, p.category1 as parent_category,p.category2 as category from ORDER_TABLE ot 
+        left join PRODUCT p on p.active=\'1\' and p.product_id=ot.PRODUCT_ID 
+		where ot.ACTIVE=\'1\' and ot.CUST_ID=? and ot.ARRIVAL_DT=? and ot.ORDER_NO=? and ot.CREATE_DT like ? 
+		union 
+		select op.ZP_TYPE as ZP_TYPE, op.PRODUCT_ID as PRODUCT_ID, op.CREATE_QTY as CREATE_QTY, p.category1 as parent_category,p.category2 as category from ORDER_PRESENT op 
+		left join PRODUCT p on p.active=\'1\' and p.product_id=op.PRODUCT_ID 
+		where op.ACTIVE=\'1\' and op.CUST_ID=? and op.ARRIVAL_DT=? and op.ORDER_NO=? and op.CREATE_DT like ? </string>
+
+    <!-- 判断正常订单是否存在 -->
+    <string name="sql_order_normal_exist">        select ot.ORDER_ID from ORDER_TABLE ot where ot.ACTIVE=\'1\' and ot.CUST_ID=? and ot.ORDER_NO=? and ot.ARRIVAL_DT=? and ot.PRODUCT_ID=? and ot.CREATE_DT like ? </string>
+
+    <!-- 判断赠品订单是否存在 -->
+    <string name="sql_order_present_exist">        select op.ORDER_ID from ORDER_PRESENT op where op.ACTIVE=\'1\' and op.CUST_ID=? and op.ORDER_NO=? and op.ZP_TYPE=? and op.ARRIVAL_DT=? and op.PRODUCT_ID=? and op.CREATE_DT like ? </string>
+
+    <!-- 正常产品，额外数据 -->
+    <string name="sql_order_normal_product_ex">        select 
+		(
+		select total(ot1.CREATE_QTY) from ORDER_TABLE ot1 
+		where ot1.ACTIVE=\'1\' and ot1.CUST_ID=ot.CUST_ID and ot1.PRODUCT_ID=ot.PRODUCT_ID and ot1.ARRIVAL_DT=?
+		) as CREATE_QTY, 
+		(
+		select total(ot1.ADJUST_QTY) from ORDER_TABLE ot1 
+		where ot1.ACTIVE=\'1\' and ot1.CUST_ID=ot.CUST_ID and ot1.PRODUCT_ID=ot.PRODUCT_ID and ot1.ARRIVAL_DT=?
+		) as ADJUST_QTY,
+		(
+		select total(ot1.ADJUST_QTY) from ORDER_TABLE ot1 
+		where ot1.ACTIVE=\'1\' and ot1.CUST_ID=ot.CUST_ID and ot1.PRODUCT_ID=ot.PRODUCT_ID and ot1.ARRIVAL_DT=?
+		) as aq2,
+		(
+		select total(ot2.CREATE_QTY) from ORDER_TABLE ot2 
+		where ot2.ACTIVE=\'1\' and ot2.CUST_ID=ot.CUST_ID and ot2.PRODUCT_ID=ot.PRODUCT_ID and ot2.ARRIVAL_DT=? 
+		) as last_week,
+		(
+		select total(ot3.CREATE_QTY) from ORDER_TABLE ot3 
+		where ot3.ACTIVE=\'1\' and ot3.CUST_ID=ot.CUST_ID and ot3.PRODUCT_ID=ot.PRODUCT_ID and (ot3.ARRIVAL_DT>=? and ot3.ARRIVAL_DT&lt;? )
+		) as avg_week 
+		from ORDER_TABLE ot where ot.ACTIVE=\'1\' and ot.CUST_ID=? and ot.PRODUCT_ID=? </string>
+
+    <!-- 赠品产品，额外数据 -->
+    <string name="sql_order_present_product_ex">        select 
+		(
+		select total(op1.CREATE_QTY) from ORDER_PRESENT op1 
+		where op1.ACTIVE=\'1\' and op1.CUST_ID=op.CUST_ID and op1.ZP_TYPE=op.ZP_TYPE and op1.PRODUCT_ID=op.PRODUCT_ID and op1.ARRIVAL_DT=? 
+		) as CREATE_QTY, 
+		(
+		select total(op1.ADJUST_QTY) from ORDER_PRESENT op1 
+		where op1.ACTIVE=\'1\' and op1.CUST_ID=op.CUST_ID and op1.ZP_TYPE=op.ZP_TYPE and op1.PRODUCT_ID=op.PRODUCT_ID and op1.ARRIVAL_DT=? 
+		) as ADJUST_QTY,
+		(
+		select total(op1.ADJUST_QTY) from ORDER_PRESENT op1 
+		where op1.ACTIVE=\'1\' and op1.CUST_ID=op.CUST_ID and op1.ZP_TYPE=op.ZP_TYPE and op1.PRODUCT_ID=op.PRODUCT_ID and op1.ARRIVAL_DT=? 
+		) as aq2,
+		(
+		select total(op2.CREATE_QTY) from ORDER_PRESENT op2 
+		where op2.ACTIVE=\'1\' and op2.CUST_ID=op.CUST_ID and op2.ZP_TYPE=op.ZP_TYPE and op2.PRODUCT_ID=op.PRODUCT_ID and op2.ARRIVAL_DT=? 
+		) as last_week,
+		(
+		select total(op3.CREATE_QTY) from ORDER_PRESENT op3 
+		where op3.ACTIVE=\'1\' and op3.CUST_ID=op.CUST_ID and op3.ZP_TYPE=op.ZP_TYPE and op3.PRODUCT_ID=op.PRODUCT_ID and (op3.ARRIVAL_DT>=? and op3.ARRIVAL_DT&lt;? )
+		) as avg_week 
+		from ORDER_PRESENT op where op.ACTIVE=\'1\' and op.CUST_ID=? and op.ZP_TYPE=? and op.PRODUCT_ID=? </string>
+
+</resources>

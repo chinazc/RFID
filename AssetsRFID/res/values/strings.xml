@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AssetsRfid</string>
+    <string name="hello_world">欢迎使用企业资产管理系统</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_error_edit">错误码信息查询</string>
+    <string name="title_activity_main_login">资产管理Rfid</string>
+    <string name="title_activity_server_set">服务器设置</string>
+    <string name="serverset">服务器设置</string>
+    <string name="title_activity_assets_query">资产查询</string>
+    <string name="query_itemcount_message">共找到%d条符合条件的记录</string>
+    <string name="title_activity_assets_detail">AssetsDetailActivity</string>
+    <string name="title_activity_assets_detail_baseinfo">AssetsDetailBaseinfoActivity</string>
+    <string name="title_activity_assets_detail_beijianlist">AssetsDetailBeijianlistActivity</string>
+    <string name="title_activity_assets_fault_manage">故障缺陷管理</string>
+    <string name="input_er_code">请扫描或输入资产编号</string>
+    <string name="title_activity_get_photo">拍照</string>
+    <string name="string_format_fault_report_confirm">确认是否对“%s”生成故障报修？</string>
+    <string name="title_activity_data_manage">数据维护</string>
+    <string name="title_activity_fault_detail_show">故障缺陷详细信息</string>
+    <string name="title_activity_scan_rfid_or_barcode">RFID&amp;条形码扫描</string>
+    <string name="title_activity_web_service_call">WebServiceCallActivity</string>
+    <string name="title_app">移动企业资产管理系统（EAM）</string>
+    <string name="title_activity_work_request_process">WorkRequestProcessActivity</string>
+    <string name="title_activity_work_request_report">WorkRequestReportActivity</string>
+    <string name="remenber_user">记住密码</string>
+    
+     <string name="sp_key_username">key_username</string>
+    <string name="sp_key_password">key_password</string>
+    <string name="sp_key_save_username_state">key_save_username_state</string> <!-- true：需要保存用户名 -->
+    <string name="sp_key_save_password_state">key_save_password_state</string> <!-- true：需要保存密码 -->
+    
+        <string name="SYNC">同步</string>
+    <string name="SAVE">保存</string>
+    <string name="SUBMIT">提交</string>
+    <!-- 登陆界面 -->
+    <string name="FAILD_LOGIN">登陆失败,请检查用户名或者密码是否正确!</string>
+    <string name="DIALOG_TITLE">消息对话框</string>
+    <string name="LOGIN_SUCCESSFUL">登陆成功!</string>
+    <string name="LOGIN_ERROR">登陆异常!</string>
+    <string name="EMPIDNULL">请输入用户名!</string>
+    <string name="PWDNULL">请输入密码!</string>
+    <string name="FAILD_LONGTIME_LOGIN">登陆超时!</string>
+    <string name="No_Network">网络不通!</string>
+    <string name="No_Record">无订单需同步!</string>
+    <string name="SERVER_ERROR">在线登陆服务器异常!</string>
+    <string name="leftLabel">向左滑登录</string>
+    <string name="rightLabel">向右滑退出</string>
+    <!-- 设置界面控件名称 -->
+    <string name="SERVER_ADDRESS">服务器地址</string>
+    <string name="Login_ADDRESS">登陆IP：</string>
+    <string name="SYNC_ADDRESS">同步IP：</string>
+    <string name="SYNCPort_ADDRESS">同步端口：</string>
+    <string name="LOGIN_MODEL">远程登录</string>
+    <string name="COMPANY_ACCOUNT">用户名</string>
+    <string name="USER_ACCOUNT">密	码</string>
+    <string name="PROVINCE">所属省份</string>
+    <string name="MODULE">登陆模块</string>
+    <string name="PRODUCT_TYPE">产品类别</string>
+    <string name="PRODUCT">产品关联</string>
+    <!-- 同步界面控件名称 -->
+    <string name="SYNC_TYPE">同步方式</string>
+    <string name="SYNC_FORCE">初始化</string>
+    <string name="SYNC_UP">增量上传</string>
+    <string name="SYNC_DOWN">增量下载</string>
+    <string name="USER_PASSWORD">用户密码</string>
+    <string name="LOGINNAME">用户名</string>
+    <!-- 同步信息界面控件名称 -->
+    <string name="START_TIME">开始时间：</string>
+    <string name="SYNC_ERROR">同步出现异常：</string>
+    <string name="SYNC_SUCCESSFUL">同步成功</string>
+    <string name="FINISH_TIME">完成时间：</string>
+    <string name="ELAPSE_TIME">耗费时间：</string>
+    <string name="SYNC_PROGRESS">同步进程：</string>
+    <string name="DOWNLOAD_COUNT">下载条数：</string>
+    <string name="UPLOAD_COUNT">上传条数：</string>
+    <string name="DELETE_COUNT">删除条数：</string>
+    <string name="SYNC_RESULT">同步结果：</string>
+    <string name="SYNC_CANCEL">同步已取消!</string>
+    <string name="BTN_BACK">返回</string>
+    <string name="EXIT">退出</string>
+    <string name="SURE">确定</string>
+    <string name="CANCEL">取消</string>
+    <string name="CONTINUE">继续</string>
+    <string name="MSG_001">登录成功</string>
+    <string name="MSG_002">你确定要退出系统吗?</string>
+    <string name="MSG_003">在此输入密码</string>
+    <string name="MSG_004">当前正在进行同步，你确定要放弃吗</string>
+    <string name="MSG_WARNING_002">请输入密码</string>
+    <string name="MSG_WARNING_003">用户名或者密码错误</string>
+    <string name="InitialSyncMsg">初始化同步将清空数据并重新下载,是否继续?</string>
+    <string name="completedVisitMsg">提示：完成后将不可更改!请检查确认之后再完成任务!</string>
+
+     <!-- GPS权限Key -->
+    <string name="GPS_API_KEY">0W_TiQSkfSja6fb1ktnLqbFQpYIOvHccseqNLcg</string>
+    <!-- 主界面 -->
+    <string name="order_form_button">订单管理</string>
+    <string name="about">关于</string>
+    <string name="multimediaUpload">多媒体上传</string>
+    <string name="more">更多</string>
+    <string name="updateProgram">检查更新</string>
+    <string name="setting">设置</string>
+    <!-- 订单列表 -->
+    <string name="order_from_title">订单列表</string>
+    <string name="search_button">检索</string>
+    <string name="new_file_button">新建资产</string>
+    <string name="of_number_hint">客户名称：</string>
+    <string name="of_date_hint">到货日期:</string>
+    <string name="default_list_item">列表空</string>
+    <string name="is_delete">确认要删除吗？</string>
+    <string name="delete_success">删除成功</string>
+    <string name="warn">警告</string>
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
+    <!-- 长按列表界面 -->
+    <string name="edit">编辑</string>
+    <string name="look">查看</string>
+    <string name="delete">删除</string>
+    <!-- 查询对话框 -->
+    <string name="customer_name">客户名称:</string>
+    <string name="order_from_number">订单编号：</string>
+    <string name="order_from_type">订单类型：</string>
+    <string name="order_from_date">下单日期：</string>
+    <!-- 订单详细信息界面 -->
+    <string name="add">添加</string>
+    <string name="save">保存</string>
+    <string name="od_num">订单编号  </string>
+    <string name="od_cunsumer_name">客户名称  </string>
+    <string name="od_type">订单类型  </string>
+    <string name="od_date">订单日期  </string>
+    <string name="od_product_type">产品类别  </string>
+    <string name="discount">折扣率(%)</string>
+    <string name="pre_discount_price">折扣前总额</string>
+    <string name="aft_discount_price">折扣后总额</string>
+    <string name="special_fee">特殊费用  </string>
+    <string name="cunsumer_order_num">客户订单号</string>
+    <string name="address">送货地址</string>
+    <!-- 产品列表界面 -->
+    <string name="product_list_title">产品列表</string>
+    <string name="pl_item_type">类型：</string>
+    <!-- 客户列表 -->
+    <string name="cust_list">客户列表</string>
+    <string name="select_cust">请选择客户</string>
+    <string name="address_ck">送货地址：</string>
+    <string name="phone_number">联系电话：</string>
+    <string name="search_menu">检索</string>
+    <string name="new_file_menu">新建</string>
+    <string name="plan_review_menu">审阅</string>
+    <string name="client_detail">客户详细信息</string>
+    <string name="cust_code">编号：</string>
+    <string name="cust_type">类型：</string>
+    <string name="dialog_title">菜单</string>
+
+    <!-- 销量界面 -->
+    <string name="saleReport">销量上报</string>
+
+    <string-array name="salesPeriod">
+        <item>1号-9号</item>
+        <item>1号-20号</item>
+        <item>1号-30号</item>
+    </string-array>
+
+    <!-- 拜访任务页面 -->
+    <string name="visitSearch">检索</string>
+    <string name="visitNew">拜访采集</string>
+    <string name="visitFilter">筛选</string>
+    <string name="visitSave">计划</string>
+    <string name="visitFilterLabel">任务筛选</string>
+
+    <string-array name="visitFilterList">
+        <item>今日任务</item>
+        <item>未执行任务</item>
+        <item>执行中任务</item>
+        <item>已完成任务</item>
+        <item>全部任务</item>
+    </string-array>
+
+    <string name="visitSearchVisitTypeLabel">拜访类型：</string>
+    <string name="visitSearchCustNameLabel">客户名称：</string>
+    <string name="visitSearchCustStyleLabel">客户类型：</string>
+    <string name="visitSearchCustCodeLabel">客户编号：</string>
+    <string name="visitSearchTaskStatusLabel">任务状态：</string>
+    <string name="visitSearchTaskTempLabel"></string>
+    <string name="visitSearchTaskTimeLabelPS">计划开始：</string>
+    <string name="visitSearchTaskTimeLabelPE">计划结束：</string>
+    <string name="visitSearchTaskTimeLabelVS">实际开始：</string>
+    <string name="visitSearchTaskTimeLabelVE">实际结束：</string>
+    <string name="visitListDateLabel">时间：</string>
+    <string name="visitListContactLabel">联系人：</string>
+    <string name="visitListAddressLabel">地址：</string>
+    <string name="loadsmorelabel">加载更多...</string>
+    <string name="loading">正在加载</string>
+    <string name="targetTypeTitle">采集结果：</string>
+    <string name="visitNewOrder">新建订单</string>
+    <string name="visitOldOrder">历史订单</string>
+    <string name="visitNewAssets">新建资产</string>
+    <!-- 任务状态 -->
+    <string name="visitStatusNotExecute">未执行</string>
+    <string name="visitStatusExecuting">执行中</string>
+    <string name="visitStatusExecuteEnd">已完成</string>
+    <!-- 拜访title -->
+    <string name="CollTargetList_TITLE">采集对象列表</string>
+    <string name="TargetTypeList_TITLE">采集对象类型列表</string>
+    <string name="taskListTitle">拜访任务</string>
+    <string name="VisitTitle">拜访管理</string>
+    <string name="taskDetailTitle">拜访明细</string>
+    <string name="taskDetailTitle2">协访明细</string>
+    <string name="dataCollectionTitle">门店指标采集</string>
+    <!-- 拜访任务时间Label -->
+    <string name="plan_s_dt_label">计划开始时间：</string>
+    <string name="visit_s_dt_label">实际开始时间：</string>
+    <string name="visit_e_dt_label">实际结束时间：</string>
+    <string name="visit_dt_label">时间：</string>
+    <!-- 线外拜访 -->
+    <string name="startVisitMsg">您确定开始拜访吗？</string>
+    <string name="exitVisitMsg">退出后本页已采集数据将丢失!您确定退出拜访吗？保存数据请点下一步。</string>
+    <string name="endVisitMsg">完成后将不能修改数据!您确定完成拜访吗？</string>
+    <string name="endVisitPhotoMsg">您没有拍店头照，不能完成任务!</string>
+    <!-- 填写周报告 -->
+    <string name="WEEK_REPORT">单店金额</string>
+    <string name="WEEK_REPORT_REVIEW">周计划审阅</string>
+    <string name="weekreport_plan">请填写下周计划内容</string>
+    <string name="weekreport_content">请填写上周报告内容</string>
+    
+    <string name="DEFAULT_LOGIN_MODEL">本地</string>
+    <string name="DEFAULT_COMPANY_ACCOUNT">pec</string>
+    <string name="DEFAULT_USER_ACCOUNT">510090000176</string>
+    <string name="DEFAULT_PROVINCE">上海</string>
+    <string name="DEFAULT_MODEL">主菜单</string>
+    <string name="DEFAULT_PRODUCT_TYPE"></string>
+    <string name="DEFAULT_PRODUCT"></string>
+    <string name="ORDER_TITLE">今日订单</string>
+    <string name="VISITTASK_TITLE">输入订单</string>
+    <string name="SYNC_TITLE">数据同步</string>
+    <string name="USER_TITLE">切换用户</string>
+    <string name="CUSTOMER_TITLE">订单查询</string>
+    <string name="INFO_SEARCH_TITLE">产品金额</string>
+    <string name="STOCK_SEARCH_TITLE">预报报表</string>
+    <string name="PRODUCT_TITLE">昨日销量</string>
+    <string name="ASSETS_TITLE">资产管理</string>
+    <string name="TODAY_VISIT_TITLE">今日拜访</string>
+    <string name="PERFORMANCE_EDITION_TITLE">业绩版</string>
+    <string name="TODAY_ORDER_TITLE">今日订单</string>
+    <string name="MESSAGE_TITLE">消息管理</string>
+    <string name="SALES_TITLE">报表统计</string>
+    <string name="STATISTICS_TITLE">预报维护</string>
+    <string name="SALES_QUERY_TITLE">销量查询</string>
+    <string name="UPLOAD_TITLE">订单上传</string>
+    <string name="PLAN_REVIEW_TITLE">计划审阅</string>
+    <string name="CAST_TITLE">签到签退</string>
+    <string name="REPORT_STATISTICS">报表统计</string>
+
+        <!-- Linux -->
+    <string name="DEFAULT_CORRECT_ADDRESS">58.213.132.85:7880</string>
+    <string name="DEFAULT_SYNC_ADDRESS">58.213.132.85:8883</string>
+    <string name="DEFAULT_SYNC_ADDRESS_PORT">8883</string>
+</resources>

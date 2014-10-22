@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <!-- 本地登录 -->
+<!--     <string name="SQL_LOGIN">select 
+        d.emp_id,d.emp_code,d.emp_name,d.sex,d.id_no,d.role_id,d.addr,d.tel,
+        d.email,d.parent_emp_code,d.active,d.pic_name,d.company_code,d.dept_code 
+        from DEPT_EMP d where d.emp_id =? and d.pwd=? and d.active =\'1\'	</string> -->
+    <string name="OLD_VISIT_ID">SELECT VISIT_TASK_ID FROM VISIT_TASK WHERE CUST_ID = ? AND STATUS = \'2\' AND ACTIVE = \'1\' ORDER BY VISIT_E_DT DESC</string>
+    <string name="HAS_ORDER">	SELECT * FROM ORDER_TABLE WHERE CUST_ID = ? AND ORDER_DT LIKE ? AND ACTIVE = \'1\'</string>
+    <string name="COPY_TARGET">	INSERT INTO COLL_RESULT_CURR 
+    						SELECT newid(), ?, CUST_ID, CUST_TYPE_ID, CUST_DEPT_CODE, TARGET_ID, KPI_ID, VALUE_TYPE, INPUT_VALUE, METRIC, ABNORMAL_FLAG, KPI_ATTRIBUTE, COMPANY_CODE, DEPT_CODE, EMP_CODE, ? FROM COLL_RESULT_CURR 
+    						WHERE VISIT_TASK_ID = ? AND KPI_ID = \'2c90821e3d66bc2c013d6ca12f2d002a\' </string>
+    <string name="EMP_INFO_SQL">	SELECT * FROM DEPT_EMP</string>
+    <!-- 获取任务明细 -->
+    <string name="GetTaskDetail">		SELECT
+		a.VISIT_TASK_ID,
+		a.PLAN_S_DT,
+		a.PLAN_E_DT,
+		a.VISIT_S_DT,
+		a.VISIT_E_DT ,
+		a.CUST_ID,
+		a.VISIT_CUST_TYPE_ID,
+		a.DESCRIPTION,
+
+		(select CUST_NAME From CUSTOMER where
+		CUST_ID=a.CUST_ID) CUST_NAME,
+		b.ZVTEXT3,
+		a.VISIT_DEPT_CODE,
+		(Select DEPT_NAME From DEPT_TABLE where DEPT_CODE =
+		a.VISIT_DEPT_CODE AND
+		DEPT_TABLE.company_code=a.company_code)
+		DEPT_NAME,
+		(Select SYS_VALUE FROM SYS_PARM where SYS_KEY1=\'006\' and
+		SYS_KEY2=
+		a.STATUS) STATE,
+		(select DIRECT_SALE From CUSTOMER where
+		CUST_ID=a.CUST_ID) DIRECT_SALE,
+		(select CUST_CODE From CUSTOMER where
+		CUST_ID=a.CUST_ID) CUST_CODE,
+		a.STATUS,
+		(Select SYS_VALUE FROM SYS_PARM where SYS_KEY1=\'011\' and
+		SYS_KEY2 = a.FILLER1) FILLER1,
+		
+		(Select SYS_VALUE FROM SYS_PARM where SYS_KEY1=\'010\' and
+		SYS_KEY2 = a.FILLER2) as FILLER2_VALUE, a.EMP_CODE, a.FILLER2 as FILLER2_KEY,a.FILLER4,b.LONGITUDE,b.LATITUDE,b.parent_cust_id,
+		a.change_remark, b.CUST_SHORT_NAME, a.VISIT_TASK_CODE ,b.address  
+		FROM VISIT_TASK a left join CUSTOMER b on b.CUST_ID = a.CUST_ID
+		where
+		a.VISIT_TASK_ID =
+		?</string>
+
+    <!-- 获取采集指标类型 -->
+    <string name="GetTargetByTaskID">		SELECT TARGET_TYPE_ID, TARGET_TYPE_NAME
+		FROM
+		TARGET_TYPE AS a
+		WHERE (TARGET_TYPE_ID IN
+		(SELECT TARGET_TYPE_ID
+		FROM
+		VISIT_TASK_TYPE
+		WHERE (VISIT_TASK_ID = ?) AND (ACTIVE = \'1\')))</string>
+    <string name="GetTargetType">		select * from TARGET_TYPE where active = \'1\'</string>
+    <string name="GetCustClerkList">		select NAME from CUST_CLERK where ACTIVE = \'1\' and CUST_ID = ? </string>
+    <string name="GetTargetTypeByTaskID">		SELECT TARGET_TYPE_ID, TARGET_TYPE_NAME
+		FROM
+		TARGET_TYPE AS a
+		WHERE (TARGET_TYPE_ID IN
+		(SELECT TARGET_TYPE_ID
+		FROM
+		VISIT_TASK_TYPE
+		WHERE (VISIT_TASK_ID = ?) AND (ACTIVE = \'1\')))</string>
+
+    <!-- 获取店头采集对象ID -->
+    <string name="GetStorePicTargetID">		select
+		a.TARGET_ID,
+		b.TARGET_NAME
+		from CUST_TYPE_REL a
+		left join target b on a.target_ID=b.TARGET_ID
+		where
+		a.CUST_TYPE_ID = ?
+		and a.CUST_DEPT_CODE = ? and TARGET_NAME LIKE ?
+		order by TARGET_ORDER</string>
+    <!-- 改变任务 -->
+    <string name="completedVisit">		update visit_task set status = ?
+		,visit_s_dt=?,visit_e_dt=?,update_dt=?,DESCRIPTION=? where visit_task_id = ?</string>
+   	<string name="saveVisit">		update visit_task set CUST_ID = ?
+		,VISIT_CUST_TYPE_ID =?,PLAN_S_DT=?,PLAN_E_DT=?,update_dt=? where visit_task_id = ?
+</string>
+    <!-- 撤销任务 -->
+    <string name="revocationVisit">		update visit_task set  active=\'0\' where visit_task_id = ?</string>
+    <!-- 改变任务 -->
+    <string name="completedVisitPDA">		update visit_task set status = ?,visit_s_dt=?,
+		visit_e_dt=?
+		,plan_s_dt=?,plan_e_dt=?,update_dt=?,visit_cust_type_id=?,change_remark=?
+		where visit_task_id = ?</string>
+    <!-- 新建任务 -->
+    <string name="newVisitType">	INSERT INTO
+		VISIT_TASK_TYPE(VISIT_TASK_ID,TARGET_TYPE_ID,ACTIVE,COMPANY_CODE,DEPT_CODE,EMP_CODE,UPDATE_DT,SYNC_FLAG)
+		VALUES(?,?,?,?,?,?,?,\'1\')</string>
+    <string name="newVisit">		insert into
+		visit_task(VISIT_TASK_ID,VISIT_TASK_CODE,VISIT_TASK_ORDER,CUST_ID,EMP_CODE,DESCRIPTION,STATUS,LONGITUDE,LATITUDE,GPS_DEVIATION,GPS_ABNORMAI_FLAG,VISIT_ROUTE_NAME,PLAN_S_DT,PLAN_E_DT,VISIT_S_DT,VISIT_E_DT,VISIT_CUST_TYPE_ID
+		,VISIT_DEPT_CODE,NEW_VISIT_TASK_ID,CHANGE_REMARK,ACTIVE,COMPANY_CODE,DEPT_CODE,UPDATER,UPDATE_DT,FILLER1,FILLER2,FILLER3,FILLER4,FILLER5,SYNC_FLAG)
+		values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,\'1\')</string>
+<string name="newProductStock">		insert into
+		stock_collect(VISIT_TASK_ID ,
+			CUST_ID,
+			PRODUCT_ID,
+			STOCK,
+			COLLECT_DT,
+			ACTIVE,
+			COMPANY_CODE,
+			DEPT_CODE,
+			UPDATE_DT,
+			EMP_CODE, 
+			SYNC_FLAG )
+		values(?,?,?,?,?,?,?,?,?,?,\'1\')
+</string>
+<string name="insertAbnormalPrice">		insert into
+		ABNORMAL_PRICE(
+			VISIT_TASK_ID ,
+			CUST_ID,
+			PRODUCT_ID,
+			price,
+			COLLECT_DT,
+			ACTIVE,
+			UPDATE_DT,
+			COMPANY_CODE,
+			DEPT_CODE,
+			EMP_CODE, 
+			SYNC_FLAG )
+		values(?,?,?,?,?,?,?,?,?,?,\'1\')
+</string>
+    <!-- 获取产品采集对象ID -->
+    <string name="GetProductTargetID">		select
+		a.TARGET_ID,
+		b.TARGET_NAME
+		from CUST_TYPE_REL a
+		left join target b on a.target_ID=b.TARGET_ID
+		where
+		a.CUST_TYPE_ID = ?
+		and a.CUST_DEPT_CODE = ? and TARGET_NAME NOT LIKE ?
+		order by
+		TARGET_ORDER</string>
+
+    <!-- 获取KPI列表 -->
+    <string name="GetKpiList">		select
+		b.KPI_ID,b.KPI_ATTRIBUTE,b.KPI_NAME,b.VALUE_TYPE,b.INPUT_TYPE,b.OPTION_VALUE,b.METRIC,b.DEFAULT_VALUE,b.MAX_VALUE,b.MIN_VALUE,b.ERROR_CHECK,b.ERROR_VALUE,b.DESCRIPTION,c.RESULT_ID,c.INPUT_VALUE
+		from CUST_TYPE_DTL a
+		left outer join KPI b on b.KPI_ID = a.KPI_ID and
+		b.ACTIVE = \'1\'
+		left outer join COLL_RESULT_CURR c on c.CUST_TYPE_ID =
+		a.CUST_TYPE_ID and
+		c.CUST_DEPT_CODE = a.CUST_DEPT_CODE and c.TARGET_ID
+		= a.TARGET_ID
+		and
+		c.KPI_ID = a.KPI_ID and c.VISIT_TASK_ID = ?
+		and
+		c.CUST_ID = ? where a.CUST_TYPE_ID = ? and a.CUST_DEPT_CODE = ?
+		and
+		a.TARGET_ID = ? and a.ACTIVE = \'1\'
+		order by b.KPI_ATTRIBUTE</string>
+    <string name="GetVisitCustTypeList">		select DISTINCT a.CUST_TYPE_ID,a.CUST_TYPE_NAME
+		from CUST_TYPE a inner join
+		customer b on a.CUST_TYPE_ID =
+		b.CUST_TYPE_ID inner join CUST_IN_CHARGER c
+		on c.CUST_ID = b.CUST_ID
+		where c.EMP_CODE = ?</string>
+    <string name="GetVisitCustTypeLength">		select count(*) from cust_type where cust_type_id
+		in (select b.CUST_TYPE_ID from customer b where b.cust_id in (select
+		cust_id from CUST_IN_CHARGER c where c.EMP_CODE = ?))</string>
+
+    <!-- 产品管理 -->
+    <string name="PRODUCT_S_PRODUCTLIST_COUNT">		SELECT
+		COUNT(p.PRODUCT_ID)
+		FROM PRODUCT
+		p,PRODUCT_CATEGORY c WHERE p.CATEGORY_ID = c.CATEGORY_ID
+		AND
+		p.ACTIVE=\'1\' AND c.ACTIVE=\'1\'</string>
+    <string name="PRODUCT_S_PRODUCTTYPE">	SELECT CATEGORY_ID,CATEGORY_NAME FROM
+		PRODUCT_CATEGORY WHERE ACTIVE = \'1\'</string>
+    <string name="PRODUCT_I_COMMON_PRODUCT">	INSERT INTO COMMON_PRODUCT
+		(PRODUCT_ID,UPDATE_DT)
+		VALUES (?,?)</string>
+    <string name="PRODUCT_U_COMMON_PRODUCT">	UPDATE COMMON_PRODUCT 
+    	SET UPDATE_DT = ?
+		WHERE PRODUCT_ID = ?</string>
+    <string name="PRODUCT_S_COMMON_PRODUCT_LIST">	SELECT PRODUCT_ID FROM COMMON_PRODUCT </string>
+    <string name="PRODUCT_S_COMMON_PRODUCT">	SELECT PRODUCT_ID FROM COMMON_PRODUCT WHERE
+		PRODUCT_ID = ?</string>
+    <string name="PRODUCT_D_COMMON_PRODUCT">	SELETE FROM COMMON_PRODUCT WHERE PRODUCT_ID = ?</string>
+    <!-- 客户管理sql -->
+    <string name="CUSTOMER_S_CUSTOMER_DETAIL">		SELECT
+		CUST_ID,CUST_CODE,CUST_NAME,CUST_SHORT_NAME,CUST_TYPE_ID,PROVINCE,CITY,CUST_REGIONAL,SALES_NETWORK,TOWN,STREET,HOUSE_NUMBER,CONTACTOR,CONTACTOR_TEL_CODE,CONTACTOR_TEL,CONTACTOR_MOBILE,DIRECT_SALE
+		,( SELECT COUNT(a.ASSETS_ID)
+		FROM
+		ASSETS a WHERE a.CUST_ID = CUSTOMER.CUST_ID AND a.ACTIVE = \'1\') FROM CUSTOMER WHERE ACTIVE = \'1\' AND CUST_ID = ?</string>
+    <string name="CUSTOMER_S_CUSTOMERLIST_COUNT">	SELECT COUNT(c1.CUST_ID) FROM CUSTOMER c1,CUST_TYPE
+		c2 WHERE 
+		c1.CUST_TYPE_ID = c2.CUST_TYPE_ID 
+		 AND c1.ACTIVE = \'1\' AND 
+		c2.ACTIVE=\'1\' </string>
+    <string name="CUSTOMER_S_CUST_TYPE">		SELECT CUST_TYPE_ID,CUST_TYPE_NAME FROM CUST_TYPE
+		WHERE ACTIVE = \'1\'</string>
+    <string name="CUSTOMER_S_SALES_NETWORK">		SELECT CUST_CAT_NAME FROM CUST_CATEGORY WHERE
+		COMPANY_CODE = ? AND CUST_CAT_KEY1 = \'003\' AND ACTIVE = \'1\'</string>
+    <string name="CUSTOMER_S_PROVINCE">		SELECT DISTINCT PROVINCE_NAME FROM REGIONAL WHERE
+		ACTIVE = \'1\'</string>
+    <string name="CUSTOMER_S_CITY">		SELECT DISTINCT CITY_NAME FROM REGIONAL WHERE
+		ACTIVE = \'1\' AND PROVINCE_NAME = ?</string>
+    <string name="CUSTOMER_S_REGIONAL">		SELECT DISTINCT REGIONAL_NAME FROM REGIONAL WHERE
+		ACTIVE = \'1\' AND CITY_NAME = ?</string>
+    <string name="CUSTOMER_S_CUST_ADDR">		SELECT
+		DELIVER_ADDR_ID,CUST_CODE,SEQ_NO,DELIVER_ADDR,DELIVER_TEL,ACTIVE,COMPANY_CODE,EMP_CODE,UPDATE_DT
+		FROM
+		CUST_DELIVER_ADDR WHERE CUST_CODE = ? AND ACTIVE = \'1\'</string>
+    <string name="CUSTOMER_I_CUSTOMER">		INSERT INTO CUSTOMER
+		(CUST_ID,CUST_CODE,CUST_NAME,CUST_SHORT_NAME,CUST_TYPE_ID,PROVINCE,CITY,CUST_REGIONAL,SALES_NETWORK,TOWN,STREET,HOUSE_NUMBER,CONTACTOR,CONTACTOR_TEL_CODE,CONTACTOR_TEL,CONTACTOR_MOBILE,DIRECT_SALE,CREATE_EMP_CODE,CREATE_DT,ACTIVE,COMPANY_CODE,EMP_CODE,UPDATE_DT,CREATE_BY_PDA)
+		VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</string>
+    <string name="CUSTOMER_I_CUST_ADDR">		INSERT INTO CUST_DELIVER_ADDR (
+		DELIVER_ADDR_ID,CUST_CODE,SEQ_NO,DELIVER_ADDR,DELIVER_TEL,ACTIVE,COMPANY_CODE,EMP_CODE,UPDATE_DT)
+		VALUES(?,?,?,?,?,?,?,?,?)</string>
+    <string name="CUSTOMER_I_CUST_IN_CHARGER">		INSERT INTO CUST_IN_CHARGER (CUST_ID,
+		IN_EMP_CODE,
+		IN_DEPT_CODE,
+		ACTIVE,
+		COMPANY_CODE,
+		EMP_CODE,
+		UPDATE_DT) VALUES
+		(?,?,?,?,?,?,?)</string>
+    <string name="CUSTOMER_S_GET_CUSTCODE">	SELECT c.CUST_CODE FROM CUST_IN_CHARGER cc,
+		CUSTOMER c WHERE cc.CUST_ID = c.CUST_ID AND cc.active = \'1\' AND
+		c.ACTIVE = \'1\' and cc.IN_EMP_CODE = ? and c.CUST_CODE LIKE ? ORDER BY c.CUST_CODE DESC</string>
+    <string name="CUSTOMER_S_ADDRID">	SELECT DELIVER_ADDR_ID FROM CUST_DELIVER_ADDR WHERE
+		CUST_CODE = ?</string>
+    <string name="CUSTOMER_U_CUSTOMER">	UPDATE CUSTOMER SET
+		CUST_NAME = ?,CUST_SHORT_NAME =
+		?,CUST_TYPE_ID = ?,PROVINCE = ?,CITY = ?,CUST_REGIONAL =
+		?,SALES_NETWORK = ?,TOWN = ?,STREET = ?,HOUSE_NUMBER = ?,CONTACTOR =
+		?,CONTACTOR_TEL_CODE = ?,CONTACTOR_TEL = ?,CONTACTOR_MOBILE =
+		?,DIRECT_SALE = ?,COMPANY_CODE = ?,EMP_CODE =
+		?,UPDATE_DT = ? WHERE CUST_ID = ?</string>
+    <string name="CUSTOMER_U_ADDR">	UPDATE CUST_DELIVER_ADDR SET DELIVER_ADDR =
+		?,DELIVER_TEL = ?,ACTIVE = ?,COMPANY_CODE = ?,EMP_CODE = ?,UPDATE_DT =
+		? WHERE DELIVER_ADDR_ID = ?</string>
+    <string name="CUSTOMER_D_ADDR">	UPDATE CUST_DELIVER_ADDR SET ACTIVE =
+		\'0\',UPDATE_DT = ? WHERE
+		CUST_CODE = ?</string>
+
+    <!-- 获取采集对象列表 -->
+    <string name="DataCollection_S_GetTargetList">		select a.TARGET_ID,b.TARGET_NAME
+		from CUST_TYPE_REL
+		a
+		left join target b on a.target_ID=b.TARGET_ID
+		where a.CUST_TYPE_ID = ?
+		and a.CUST_DEPT_CODE = ?
+		order by TARGET_ORDER</string>
+
+    <!-- 获取KPI总数 -->
+    <string name="DataCollection_S_GetKpiSum">		select count(*) count
+		from CUST_TYPE_DTL
+		where
+		CUST_TYPE_ID = ?
+		and CUST_DEPT_CODE = ?
+		and TARGET_ID = ? and
+		Active=\'1\'</string>
+
+    <!-- 获取已采集�?�? -->
+    <string name="DataCollection_S_GetCollectedSum">		select count(*) count
+		from COLL_RESULT_CURR
+		where
+		VISIT_TASK_ID = ?
+		and CUST_ID = ?
+		and CUST_TYPE_ID = ?
+		and CUST_DEPT_CODE
+		= ?
+		and INPUT_VALUE !=\'\'
+		and TARGET_ID=?</string>
+
+    <!-- 获取采集异常总数 -->
+    <string name="DataCollection_S_GetAbnormalSum">		select count(*) count
+		from COLL_RESULT_CURR
+		where
+		VISIT_TASK_ID = ?
+		and CUST_ID = ?
+		and CUST_TYPE_ID = ?
+		and CUST_DEPT_CODE
+		= ?
+		and INPUT_VALUE !=\'\'
+		and ABNORMAL_FLAG=\'1\'
+		and TARGET_ID=?</string>
+
+    <!-- 保存KPI采集数据 -->
+    <string name="DataCollection_I_SaveCollectionResult">		INSERT INTO COLL_RESULT_CURR(
+		RESULT_ID,VISIT_TASK_ID,CUST_ID,CUST_TYPE_ID,CUST_DEPT_CODE,TARGET_ID,KPI_ID,VALUE_TYPE,INPUT_VALUE
+		,METRIC,ABNORMAL_FLAG,KPI_ATTRIBUTE,COMPANY_CODE,DEPT_CODE,EMP_CODE,UPDATE_DT,SYNC_FLAG)
+		values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,\'1\')</string>
+    <string name="DataCollection_I_UpdateCollectionResult">		update coll_result_curr set input_value = ?,update_dt=? ,SYNC_FLAG=\'1\' where result_id = ?</string>
+    <!-- 校验某任务某target某kpi是否采集了 -->
+    <string name="DataCollect_I_SearchCollectctionResult">	    select result_id from coll_result_curr a where a.visit_task_id = ? and a.target_id = ?
+and a.kpi_id =? and a.cust_type_id=? and a.cust_dept_code=?</string>
+	<!-- 校验某任务是否有订单产生 -->
+	<string name="checkOrderInTask">	    select count(*) from order_table where ORDER_CODE=?
+</string>
+    <string name="DataCollection_I_DeleteCollectionResult">		delete from coll_result_curr where result_id = ?</string>
+    <!-- 修改KPI采集数据 -->
+    <string name="DataCollection_U_ModifyCollectionResult">		UPDATE COLL_RESULT_CURR set INPUT_VALUE = ?,
+		ABNORMAL_FLAG = ?,COMPANY_CODE = ?,
+		DEPT_CODE =?,EMP_CODE = ?,UPDATE_DT
+		= ? where RESULT_ID = ?</string>
+
+    <!-- 获取采集对象列表 -->
+    <string name="getTargetListItemPDANew">		select 
+		a.target_id,b.target_name,b.target_desc from cust_type_rel a,target b where a.target_id = b.target_id 
+		and a.active = \'1\' and b.active = \'1\'
+		and a.cust_type_id =? and cust_dept_code = ?
+		order by a.target_order	</string>
+    <string name="getTargetTypeListItem">			SELECT TARGET_TYPE_ID ,
+				   TARGET_TYPE_NAME 
+			FROM TARGET_TYPE 
+			WHERE ACTIVE=\'1\'	</string>
+	<string name="getTaskOrderCollectInfo">
+		SELECT
+		WHOUSE_ID,
+		REMARK,
+		PROD_CATEGORY_CODE,
+		ORDER_DT ,
+		CREATE_DT 
+		FROM
+		ORDER_TABLE
+		WHERE
+		ORDER_CODE =?
+	</string>
+	<string name="getOrderCollectInfo">
+		SELECT
+		WHOUSE_ID,
+		REMARK,
+		PROD_CATEGORY_CODE,
+		ORDER_DT 
+		FROM
+		ORDER_TABLE
+		WHERE
+		 order_id =?
+	</string>
+
+<!-- 任务拜访中订单管理、库存管理 -->
+<string name="getProduct4OrderInTask">		    
+        SELECT 
+			b.PRODUCT_NAME,
+			c.STOCK ,
+			a.product_id ,
+			a.standard_stock , 
+			d.qty_i ,
+			b.BATCH_UNIT,
+			b.UNIT, 
+			d.ORIGIN_PRICE 
+		FROM
+			PRODUCT_CUSTOMER_REL a
+		LEFT JOIN PRODUCT b ON a.PRODUCT_ID = b.PRODUCT_ID 
+		LEFT JOIN STOCK_COLLECT c ON a.PRODUCT_ID = c.PRODUCT_ID and c.active = \'1\'  and c.VISIT_TASK_ID=?
+		LEFT JOIN Order_detail d ON a.PRODUCT_ID = d.PRODUCT_ID and d.active = \'1\' and d.order_id=(SELECT ORDER_ID FROM order_table WHERE ORDER_CODE=?)
+		WHERE
+			a.CUST_ID = ?
+		AND a.ACTIVE = \'1\'
+		AND b.ACTIVE = \'1\'
+</string>
+<!-- 任务拜访中订单管理（无客户产品关联） -->
+<string name="getProduct4OrderInTaskNoRel">		    
+       SELECT 
+		b.PRODUCT_NAME,
+		c.STOCK ,
+		b.product_id ,
+		b.ACTIVE , 
+		d.qty_i ,
+		b.BATCH_UNIT,
+		b.UNIT, 
+		d.ORIGIN_PRICE 
+	FROM
+		PRODUCT b 
+		LEFT JOIN STOCK_COLLECT c ON b.PRODUCT_ID = c.PRODUCT_ID and c.active = \'1\'  and c.VISIT_TASK_ID=?
+		LEFT JOIN Order_detail d ON b.PRODUCT_ID = d.PRODUCT_ID and d.active = \'1\' and d.order_id=(SELECT ORDER_ID FROM order_table WHERE ORDER_CODE=? and active=\'1\')
+	WHERE
+		b.ACTIVE = \'1\'
+</string>
+
+    <string name="getProduct4Order">		    
+        SELECT 
+			b.PRODUCT_NAME,
+			a.product_id ,
+			a.standard_stock , 
+			d.qty_i ,
+			b.BATCH_UNIT,
+			b.UNIT, 
+			d.ORIGIN_PRICE 
+		FROM
+			PRODUCT_CUSTOMER_REL a
+		LEFT JOIN PRODUCT b ON a.PRODUCT_ID = b.PRODUCT_ID 
+		LEFT JOIN Order_detail d ON a.PRODUCT_ID = d.PRODUCT_ID and d.active = \'1\' and d.order_id=? 
+		WHERE
+			a.CUST_ID = ?
+		AND a.ACTIVE = \'1\'
+		AND b.ACTIVE = \'1\'
+</string>
+<!-- 订单管理（无客户产品关联） -->
+    <string name="getProduct4OrderNoRel">		    
+        SELECT 
+			b.PRODUCT_NAME,
+			b.product_id ,
+			b.active,  
+			d.qty_i ,
+			b.BATCH_UNIT,
+			b.UNIT, 
+			d.ORIGIN_PRICE 
+		FROM
+			PRODUCT b 
+			LEFT JOIN Order_detail d ON b.PRODUCT_ID = d.PRODUCT_ID and d.active = \'1\' and d.order_id=? 
+		WHERE
+			 b.ACTIVE = \'1\'
+</string>
+<string name="getAbnormalPrice">		    
+       SELECT 
+			a.product_id ,
+			b.PRODUCT_NAME,
+			c.PRICE
+		FROM
+			PRODUCT_CUSTOMER_REL a
+		LEFT JOIN PRODUCT b ON a.PRODUCT_ID = b.PRODUCT_ID 
+		LEFT JOIN ABNORMAL_PRICE c ON a.PRODUCT_ID = c.PRODUCT_ID and VISIT_TASK_ID=? and c.ACTIVE=\'1\'
+		WHERE
+			a.CUST_ID = ?
+			AND a.ACTIVE = \'1\'
+			AND b.ACTIVE = \'1\'
+</string>
+    <string name="getTargetListItem">select 
+a.target_id,
+b.target_name,
+b.target_desc,
+
+(select count(*) from coll_result_curr where visit_task_id = ? and target_id = b.target_id ),
+
+(select count(*) from cust_type_dtl c,kpi d 
+ where d.kpi_id = c.kpi_id 
+ and c.active =\'1\' 
+ and d.active =\'1\'
+ and c.cust_type_id = a.cust_type_id 
+ and c.cust_dept_code = a.cust_dept_code 
+ and c.target_id = a.target_id),
+ 
+ (select  INPUT_VALUE from coll_result_curr where visit_task_id = ? and target_id = b.target_id and kpi_id = \'2c90821e3d66bc2c013d6ca12f2d002a\' limit 1)
+
+from cust_type_rel a, target b 
+where a.target_id = b.target_id 
+and a.active = \'1\' 
+and b.active = \'1\'
+and a.cust_type_id = ? 
+and cust_dept_code = ?
+and b.target_type_id=? 
+order by a.target_order</string>
+
+    <!-- 获取KPI列表 -->
+    <string name="queryCustKPI">	 select 
+		a.kpi_id,a.kpi_name,a.kpi_code,a.value_type,a.input_type,a.option_value,a.metric,a.default_value,a.max_value,a.min_value,a.error_check,
+		a.error_value,a.description,a.sql_key,a.kpi_attribute,a.active,a.company_code,a.default_value,a.emp_code,a.update_dt,
+		(select
+		c.result_id from COLL_RESULT_CURR c where
+		c.VISIT_TASK_id= ? and c.cust_id =? and c.target_id =? and c.kpi_id= a.kpi_id),
+    	(select
+    	input_value
+    	from COLL_RESULT_CURR where
+    	VISIT_TASK_id =? and cust_id =? and target_id =? and kpi_id= a.kpi_id)
+     	from cust_type_dtl b,kpi a where a.kpi_id = b.kpi_id 
+    	and a.active =\'1\' and b.active =\'1\'
+    	and b.cust_type_id =? and b.cust_dept_code = ? and b.target_id =?</string>
+    <string name="DataCollect_I_SKUName">      select 
+(select t0.sku_name from DRP042T0 t0 where t0.sku_no = ti.sku_no1) as sku_no1,
+(select t0.sku_name from DRP042T0 t0 where t0.sku_no = ti.sku_no2) as sku_no2,
+(select t0.sku_name from DRP042T0 t0 where t0.sku_no = ti.sku_no3) as sku_no3
+from DRP042TI ti
+where ti.sku_no = ?</string>
+    <!-- 任务控制类型 -->
+    <string name="GetVisitType">		select * from visit_type where active = \'1\'</string>
+    <!-- 某任务控制类�? -->
+    <string name="GetOneVisitType">		select * from visit_type where active = \'1\' and
+		visit_type_id = (select visit_type_id from visit_task where
+		visit_task_id = ? and active=\'1\')</string>
+    <!-- 新建任务 -->
+    <string name="newVisitTaskType">	INSERT INTO
+		VISIT_TASK_TYPE(VISIT_TASK_ID,TARGET_TYPE_ID,ACTIVE,COMPANY_CODE,DEPT_CODE,EMP_CODE,UPDATE_DT)
+		VALUES(?,?,?,?,?,?,?)</string>
+
+    <!-- 获取kpi总数 -->
+    <string name="getKpiCount">		select
+		count(*)
+		from kpi a where a.active=\'1\' and
+		a.kpi_id in (select
+		b.kpi_id from
+		target_kpi_list b where
+		b.target_group_list_item_id=? and
+		b.active
+		=\'1\')</string>
+    <string name="getChangeUser">    	    select emp_code,emp_name from dept_emp 
+    	    where EMP_CODE in 
+            (select POSITION_ID 
+             from ZW_USER_POSITION 
+             where USER_ID = ?)  
+             order by emp_name</string>
+    <string name="getCustType">	    select a.CUST_TYPE_ID,a.CUST_TYPE_NAME from cust_type a where active = \'1\' </string>
+    <string name="getVisitStatus">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'006\' </string>
+    <string name="getVisitType">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'010\' </string>
+    <string name="getPosition">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'013\' </string>
+    <string name="getIntest">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'014\' </string>
+    <string name="getActive">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'015\' </string>
+    <string name="getVisitResult">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'011\' </string>
+    <string name="getSalesDate">	    select sys_value,sys_value from sys_parm where sys_key1 = \'012\' </string>
+  <string name="getOrderType">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'021\' 
+   </string> 
+   <string name="getSellGroup">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'017\' 
+   </string>
+   <string name="getProductGroup">	    select sys_key2,sys_value from sys_parm where sys_key1 = \'019\' 
+   </string>
+    <!-- 订单管理sql -->
+    <string name="ORDER_S_ORDERTABLE">	SELECT
+		o.ORDER_ID,o.ORDER_CODE,o.ORDER_DT,o.CUST_ID,o.CATEGORY_ID,o.DISCOUNT_RATE,o.ORIGIN_AMOUNT,o.TOTAL_AMOUNT,o.WHOUSE_ID,o.SPECIAL_FEE,o.REMARK,o.PROD_CATEGORY_CODE,o.CUST_ORDER,o.DELIVER_ADDR,o.ACTIVE,o.CREATE_EMP_CODE,o.CREATE_DT,o.PROCESS_FLAG,o.COMPANY_CODE,o.DEPT_CODE,o.UPDATER,o.UPDATE_DT,c.CUST_NAME
+		FROM ORDER_TABLE o ,CUSTOMER c WHERE o.ACTIVE = \'1\' AND c.ACTIVE =
+		\'1\' AND o.CUST_ID = c.CUST_ID AND o.ORDER_ID = ?</string>
+    <string name="Visit_ORDER_S_ORDERTABLE">	SELECT
+		o.ORDER_ID,o.ORDER_CODE,o.ORDER_DT,o.CUST_ID,o.CATEGORY_ID,o.DISCOUNT_RATE,o.ORIGIN_AMOUNT,o.TOTAL_AMOUNT,o.WHOUSE_ID,o.SPECIAL_FEE,o.REMARK,o.PROD_CATEGORY_CODE,o.CUST_ORDER,o.DELIVER_ADDR,o.ACTIVE,o.CREATE_EMP_CODE,o.CREATE_DT,o.PROCESS_FLAG,o.COMPANY_CODE,o.DEPT_CODE,o.UPDATER,o.UPDATE_DT,c.CUST_NAME
+		FROM ORDER_TABLE o ,CUSTOMER c WHERE o.ACTIVE = \'1\' AND c.ACTIVE =
+		\'1\' AND o.CUST_ID = c.CUST_ID AND o.visit_task_id = ?</string>
+    <string name="ORDER_S_ORDERDETAIL">	SELECT
+		o.ORDER_ID,o.PRODUCT_ID,o.QTY_I,o.QTY_F,o.ORIGIN_PRICE,o.DISCOUNT_RATE,o.GIFT_QTY,o.ACTIVE,o.COMPANY_CODE,o.UPDATER,o.UPDATE_DT,p.PRODUCT_NAME,p.SPECIFICATION,p.ORDER_PRICE
+		FROM ORDER_DETAIL o,PRODUCT p WHERE o.ACTIVE = \'1\' AND p.ACTIVE =
+		\'1\' AND o.PRODUCT_ID = p.PRODUCT_ID AND o.ORDER_ID = ?</string>
+    <string name="Visit_ORDER_S_ORDERDETAIL">	SELECT
+		o.ORDER_ID,o.PRODUCT_ID,o.QTY_I,o.QTY_F,o.ORIGIN_PRICE,o.DISCOUNT_RATE,o.GIFT_QTY,o.ACTIVE,o.COMPANY_CODE,o.UPDATER,o.UPDATE_DT,p.PRODUCT_NAME,p.SPECIFICATION,p.ORDER_PRICE
+		FROM ORDER_DETAIL o,PRODUCT p WHERE o.ACTIVE = \'1\' AND p.ACTIVE =
+		\'1\' AND o.PRODUCT_ID = p.PRODUCT_ID AND o.ORDER_ID = (select
+		order_id from order_table where visit_task_id = ? and active=\'1\')</string>
+    <string name="ORDER_S_ORDERLIST">	SELECT
+		o.ORDER_ID,o.ORDER_CODE,c.CUST_NAME,o.ORDER_DT FROM ORDER_TABLE
+		o,CUSTOMER c WHERE o.CUST_ID = c.CUST_ID AND c.ACTIVE = \'1\' AND
+		o.ACTIVE = \'1\'</string>
+    <string name="ORDER_S_ORDERLIST_COUNT">	SELECT COUNT(o.ORDER_ID) FROM ORDER_TABLE
+		o,CUSTOMER c WHERE o.CUST_ID = c.CUST_ID AND c.ACTIVE = \'1\' AND
+		o.ACTIVE = \'1\'</string>
+    <string name="ORDER_S_CUSTADDR">	SELECT cd.DELIVER_ADDR_ID,cd.DELIVER_ADDR FROM
+		CUST_DELIVER_ADDR cd ,CUSTOMER c where c.CUST_CODE = cd.CUST_CODE AND
+		c.CUST_ID = ? AND c.ACTIVE = \'1\' AND cd.ACTIVE = \'1\'</string>
+    <string name="ORDER_S_ORDERTYPE">	SELECT
+		CATEGORY_ID,CATEGORY_NAME,DISCOUNT_RATE,DISCOUNT_FLAG,DISPLAY_ORDER
+		FROM ORDER_CATEGORY WHERE ACTIVE = \'1\' ORDER BY DISPLAY_ORDER</string>
+    <string name="ORDER_S_GET_ORDERCODE">SELECT max(order_code) FROM ORDER_TABLE</string>
+    <string name="ORDER_S_PRODUCTLIST">	SELECT
+		p.PRODUCT_ID,p.PRODUCT_CODE,p.PRODUCT_NAME,p.UNIT,p.SPECIFICATION,p.ORDER_PRICE,c.CATEGORY_NAME
+		FROM PRODUCT p,PRODUCT_CATEGORY c WHERE p.CATEGORY_ID = c.CATEGORY_ID
+		AND p.ACTIVE=\'1\' AND c.ACTIVE=\'1\'</string>
+    <string name="ORDER_S_ORDERDETAIL_ID_LIST">	SELECT
+		PRODUCT_ID
+		FROM ORDER_DETAIL WHERE ORDER_ID =
+		?</string>
+    <string name="ORDER_S_GET_HISTORY_ORDER_DETAIL_LIST">		SELECT
+    d.ORDER_ID,d.PRODUCT_ID,d.QTY_I,d.QTY_F,d.ORIGIN_PRICE,d.DISCOUNT_RATE,d.GIFT_QTY,d.ACTIVE,d.COMPANY_CODE,d.UPDATER,d.UPDATE_DT,p.PRODUCT_NAME,p.SPECIFICATION,p.ORDER_PRICE
+		FROM ORDER_DETAIL d,PRODUCT p WHERE 
+		d.ACTIVE = \'1\' AND p.ACTIVE =\'1\' AND d.PRODUCT_ID = p.PRODUCT_ID
+		 AND d.order_id in (select top 1 order_id from order_table o where o.CUST_ID = ? and o.active = \'1\' order by o.update_dt desc )</string>
+    <string name="Visit_ORDER_S_GET_HISTORY_ORDER_DETAIL_LIST">		SELECT
+		o.ORDER_ID,d.PRODUCT_ID,d.QTY_I,d.QTY_F,d.ORIGIN_PRICE,d.DISCOUNT_RATE,d.GIFT_QTY,d.ACTIVE,d.COMPANY_CODE,d.UPDATER,d.UPDATE_DT,p.PRODUCT_NAME,p.SPECIFICATION,p.ORDER_PRICE
+		FROM ORDER_TABLE o,ORDER_DETAIL d,PRODUCT p WHERE o.ACTIVE = \'1\' AND
+		d.ACTIVE = \'1\' AND p.ACTIVE =
+		\'1\' AND d.PRODUCT_ID = p.PRODUCT_ID
+		AND o.ORDER_ID = d.ORDER_ID AND
+		o.visit_task_id = ?</string>
+    <string name="ORDER_I_ORDERTABLE">	INSERT INTO ORDER_TABLE
+		(ORDER_ID,ORDER_CODE,ORDER_DT,CUST_ID,CATEGORY_ID,DISCOUNT_RATE,ORIGIN_AMOUNT,TOTAL_AMOUNT,WHOUSE_ID,SPECIAL_FEE,REMARK,PROD_CATEGORY_CODE,CUST_ORDER,DELIVER_ADDR,ACTIVE,CREATE_EMP_CODE,CREATE_DT,PROCESS_FLAG,COMPANY_CODE,DEPT_CODE,UPDATER,UPDATE_DT)
+		VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</string>
+    <string name="ORDER_I_ORDERDETAIL">	INSERT INTO ORDER_DETAIL
+		(ORDER_ID,PRODUCT_ID,QTY_I,QTY_F,ORIGIN_PRICE,DISCOUNT_RATE,GIFT_QTY,ACTIVE,COMPANY_CODE,UPDATER,UPDATE_DT)
+		VALUES(?,?,?,?,?,?,?,?,?,?,?)</string>
+    <string name="ORDER_U_ORDERTABLE">	UPDATE ORDER_TABLE SET
+		CUST_ID=?,CATEGORY_ID=?,DISCOUNT_RATE=?,ORIGIN_AMOUNT=?,TOTAL_AMOUNT=?,WHOUSE_ID=?,SPECIAL_FEE=?,REMARK=?,PROD_CATEGORY_CODE=?,CUST_ORDER=?,DELIVER_ADDR=?,ACTIVE=?,PROCESS_FLAG=?,COMPANY_CODE=?,DEPT_CODE=?,UPDATER=?,UPDATE_DT=?
+		WHERE ORDER_ID = ?</string>
+    <string name="ORDER_U_ORDERDETAIL">	UPDATE ORDER_DETAIL SET
+		QTY_I=?,QTY_F=?,ORIGIN_PRICE=?,DISCOUNT_RATE=?,GIFT_QTY=?,ACTIVE=?,COMPANY_CODE=?,UPDATER=?,UPDATE_DT=?
+		WHERE ORDER_ID = ? AND PRODUCT_ID = ?</string>
+    <string name="ORDER_D_ORDERTABLE">	UPDATE ORDER_TABLE SET ACTIVE = \'0\',UPDATE_DT = ?
+		WHERE ORDER_ID = ?</string>
+    <string name="ORDER_D_ORDERDETAIL">		UPDATE ORDER_DETAIL SET ACTIVE = \'0\',UPDATE_DT =
+		?
+		WHERE ORDER_ID = ?</string>
+    <!-- 资产管理 -->
+
+    <string name="ASSETS_S_ASSETSLIST">	SELECT
+		a.ASSETS_ID,a.ASSETS_NAME,a.ASSETS_CODE,a.STATUS,a.REMARK,s.SYS_VALUE,(SELECT
+		p.CONTENT FROM TBPHOTO p WHERE p.KEY_RECORD_ID = a.ASSETS_ID)
+		FROM
+		ASSETS a INNER JOIN SYS_PARM s ON a.STATUS = s.SYS_KEY2 WHERE
+		s.SYS_KEY1 = \'011\'
+		AND a.ACTIVE
+		= \'1\'</string>
+    <string name="ASSETS_S_ASSETSLIST_COUNT">	SELECT COUNT(a.ASSETS_ID)
+		FROM
+		ASSETS a INNER JOIN
+		SYS_PARM s ON a.STATUS = s.SYS_KEY2 INNER JOIN CUSTOMER c ON a.CUST_ID
+		= c.CUST_ID INNER JOIN CUST_IN_CHARGER c1 ON c.CUST_ID = c1.CUST_ID
+		WHERE
+		s.SYS_KEY1 = \'011\'
+		AND a.ACTIVE
+		= \'1\'
+		AND c.ACTIVE
+		=
+		\'1\'
+		AND
+		c1.ACTIVE
+		=
+		\'1\'</string>
+    <string name="ASSETS_S_ASSETS_NAMES">	SELECT SYS_VALUE FROM SYS_PARM WHERE SYS_KEY1
+		=\'010\'</string>
+    <string name="ASSETS_S_ASSETS_STATUS">	SELECT SYS_KEY2 ,SYS_VALUE FROM SYS_PARM WHERE
+		SYS_KEY1 =\'011\'</string>
+    <string name="ASSETS_I_ASSETS">		INSERT INTO ASSETS
+		(ASSETS_ID,CUST_ID,ASSETS_CODE,ASSETS_NAME,STATUS,TRANSMIT,ACTIVE,COMPANY_CODE,DEPT_CODE,EMP_CODE,UPDATE_DT,CREATE_DT,REMARK)
+		VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)</string>
+    <string name="ASSETS_I_ASSETS_PHOTO">		INSERT INTO ASSETS_PHOTO
+		(
+		ASSETS_PHOTO_ID,
+		ASSETS_ID,
+		VISIT_TASK_ID,
+		ASSETS_PHOTO_ORDER,
+		PIC_NAME,
+		ACTIVE,
+		COMPANY_CODE,
+		DEPT_CODE,
+		EMP_CODE,
+		UPDATE_DT
+		)
+		VALUES (?,?,?,?,?,?,?,?,?,?)</string>
+    <string name="ASSETS_U_ASSETS">		UPDATE ASSETS SET
+		ASSETS_NAME = ?,STATUS =
+		?,TRANSMIT = ?,ACTIVE = ?,EMP_CODE = ?,UPDATE_DT =
+		?,REMARK = ? WHERE
+		ASSETS_ID = ?</string>
+    <string name="ASSETS_U_ASSETS_PHOTO">		UPDATE ASSETS_PHOTO SET PIC_NAME =? WHERE ASSETS_PHOTO_ID = ? </string>
+    <string name="ASSETS_GET_ASSETS_PHOTO">		SELECT ASSETS_PHOTO_ID FROM ASSETS_PHOTO WHERE ASSETS_PHOTO_ID = ? AND ACTIVE = \'1\' </string>
+    <string name="HISTORYORDER_FOR_VISIT">		select (select product_code from product where product_id =od.product_id  and active = \'1\'),
+		(select product_name from product where product_id =od.product_id and active =\'1\'),
+		sum(od.qty_i),
+		sum(od.qty_f)
+ 		from order_detail od where od.order_id in(
+		select order_id From order_table where cust_id = ? and order_dt > ? and order_dt &lt; ? and create_emp_code = ? and active = \'1\') 
+		and active = \'1\'
+		group by od.product_id</string>
+    <!--
+<string name="SYNC_END_CLEAR_DATA_LOCK">		DELETE FROM DATA_LOCK
+</string>
+    <string name="SYNC_END_ORDER_DATA_LOCK">		INSERT INTO DATA_LOCK SELECT ORDER_ID,\'O\' FROM ORDER_TABLE WHERE Order_code like \'O%\' AND ACTIVE = \'1\'</string>
+    <string name="SYNC_END_CUSTOMER_DATA_LOCK">		INSERT INTO DATA_LOCK SELECT CUST_ID,\'C\' FROM CUSTOMER WHERE cust_code like \'c%\' AND ACTIVE = \'1\'</string>
+    <string name="SYNC_END_VISIT_TASK_DATA_LOCK">		INSERT INTO DATA_LOCK select VISIT_TASK_ID, \'V\' from VISIT_TASK WHERE STATUS = \'2\' AND ACTIVE = \'1\' </string>
+    <string name="OTCPHOTOSHAVEBEENSHOT">        INSERT INTO DATA_LOCK VALUES(?,?)</string>
+    -->
+    <string name="GETOTCPHOTOSHAVEBEENSHOT">        select * from COLL_RESULT_CURR where kpi_id = \'262626832732aa68012732aaa0a704b8\' and visit_task_id=? </string>
+    <!--
+<string name="GETOTCPHOTOSHAVEBEENSHOT">        select * from COLL_RESULT_CURR where kpi_id = \'402835343b6486e9013b7468e5880024\' and visit_task_id=? 
+</string>
+    -->
+    <!-- 获取有效的图片名称 -->
+    <string name="JPGNAMEARRAY">	select input_value from COLL_RESULT_CURR where VALUE_TYPE = \'8\'
+		union 
+		select pic_name from assets_photo</string>
+    <!-- 记录修改时间 -->
+    <string name="INSERT_UPDATE_DT_LOG">INSERT INTO UPDATE_DT_LOG(LOG_ID ,UPDATE_DT_BEFORE ,UPDATE_DT_AFTER,EMP_CODE,DEPT_CODE,COMPANY_CODE,UPDATE_DT) VALUES(?,?,?,?,?,?,?)</string>
+    <!-- <string name="CHECK_VISIT_ORDER_IS_SYNC">select data_id from data_lock where data_id = (SELECT TOP 1 ORDER_TABLE_ID FROM VISIT_ORDER_TABLE WHERE VISIT_TASK_ID = ?) and Type=\'O\'</string> -->
+
+    <string name="WEEKREPORT_INSERT">        INSET INTO ZW_WEEK_REPORT(REPORT_ID,START_DT,END_DT,PLAN_CONTENT) VALUES(?,?,?,?)</string>
+	<string name="checkOrder">
+		SELECT * FROM ORDER_TABLE WHERE ORDER_ID=? and active=\'1\'
+	</string>
+	<string name="taskCheckOrder">
+		SELECT * FROM ORDER_TABLE WHERE order_code=? and active=\'1\'
+	</string>
+	<string name="checkOrderProduct">
+		SELECT * FROM ORDER_DETAIL WHERE 
+		ORDER_ID=? AND PRODUCT_ID=?
+	</string>
+	<string name="checkStock">
+		SELECT * FROM STOCK_COLLECT  WHERE VISIT_TASK_ID=? AND PRODUCT_ID=?
+	</string>
+	<string name="checkAbnormalPrice">
+		SELECT * FROM ABNORMAL_PRICE WHERE VISIT_TASK_ID=? AND PRODUCT_ID=?
+	</string>
+	<string name="insertOrderTable">
+		INSERT INTO ORDER_TABLE VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+	</string>
+	<string name="insertOrderDetail">
+		INSERT INTO ORDER_DETAIL VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+	</string>
+	<string name="updateTaskOrderTable">
+		UPDATE ORDER_TABLE SET WHOUSE_ID=?,REMARK=?,PROD_CATEGORY_CODE=?,ORDER_DT=?,
+		UPDATER=?,UPDATE_DT=?,sync_flag=\'1\' where ORDER_CODE=?
+	</string>
+	<string name="updateOrderTable">
+		UPDATE ORDER_TABLE SET WHOUSE_ID=?,REMARK=?,PROD_CATEGORY_CODE=?,ORDER_DT=?,
+		UPDATER=?,UPDATE_DT=?,sync_flag=\'1\' where ORDER_ID=?
+	</string>
+	<string name="updateStock">
+		UPDATE STOCK_COLLECT SET STOCK=?,COLLECT_DT=?,UPDATE_DT=?,
+		sync_flag=\'1\' where VISIT_TASK_ID=? and PRODUCT_ID=?
+	</string>
+	<string name="updateAbnormalPrice">
+		UPDATE ABNORMAL_PRICE SET PRICE=?,COLLECT_DT=?,UPDATE_DT=?,
+		sync_flag=\'1\' where VISIT_TASK_ID=? and PRODUCT_ID=?
+	</string>
+	<string name="updateOrderDetail">
+		UPDATE ORDER_DETAIL SET QTY_I=?,UPDATE_DT=?,ORIGIN_PRICE=?,
+		sync_flag=\'1\' where ORDER_ID=? and PRODUCT_ID=?
+	</string>
+	<string name="getWarehouseList">		
+			SELECT SYS_KEY2,SYS_VALUE FROM sys_parm WHERE SYS_key1=\'023\' 
+	</string>
+</resources>

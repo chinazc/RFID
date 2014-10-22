@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:layout_margin="20dp"
+    android:background="@drawable/frameround">
+        <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+         >
+    <TextView 
+        android:id="@+id/activityNum"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:gravity="center_vertical"
+        android:text="活动编号"
+        android:layout_weight="1"/>
+    <TextView 
+        android:id="@+id/activityName"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:gravity="center_vertical"
+       android:text="活动名称"
+        android:layout_weight="1"/>
+    <TextView 
+        android:id="@+id/activityDate"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:gravity="center_vertical"
+        android:text="活动时间"
+        android:layout_weight="1"/>
+     </LinearLayout>
+
+   
+     <LinearLayout 
+         android:id="@+id/split"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/ll"
+         android:orientation="vertical"
+         android:background="@drawable/split"/>
+        <ListView
+            android:id="@+id/listViewStandardWorkList"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/split"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        </ListView>
+    
+
+</RelativeLayout>

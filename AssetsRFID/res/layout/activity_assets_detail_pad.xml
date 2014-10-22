@@ -1,0 +1,134 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/main_title" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/lin"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+            <TextView
+                android:id="@+id/textViewAssetNo"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:text="资产编号"
+                android:textColor="@color/grey"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textViewAssetsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:text="在此显示具体资产名称"
+                android:textColor="@color/black"
+                android:textSize="28sp" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/linearLayoutButton"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/lin"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.15"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/buttonAssetsBaseinfo"
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/tab_button"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="基本信息"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/buttonBeijianList"
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/tab_button"
+                android:button="@null"
+                android:gravity="center"
+                android:text="备件清单"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/buttonEquipmentLog"
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/tab_button"
+                android:button="@null"
+                android:gravity="center"
+                android:text="设备日志"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/buttonStandard"
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/tab_button"
+                android:button="@null"
+                android:gravity="center"
+                android:text="标准作业规范"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/buttonPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@drawable/tab_button"
+                android:button="@null"
+                android:gravity="center"
+                android:text="预防性维护计划"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/buttonDocument"
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/tab_button"
+                android:button="@null"
+                android:gravity="center"
+                android:text="设备文档"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearDetailInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_below="@+id/linearLayoutButton"
+            android:orientation="vertical"
+            android:background="@color/antiquewhite" >
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

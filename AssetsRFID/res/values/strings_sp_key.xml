@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sp_key_username">key_username</string>
+    <string name="sp_key_password">key_password</string>
+    <string name="sp_key_save_username_state">key_save_username_state</string> <!-- true：需要保存用户名 -->
+    <string name="sp_key_save_password_state">key_save_password_state</string> <!-- true：需要保存密码 -->
+    <string name="sp_key_need_order_code">key_need_order_code</string> <!-- true：多订单模式 -->
+    <string name="sp_key_load_order_code">key_load_order_code</string> <!-- true：加载订单编号 -->
+
+    <string name="key_path_root">BrightDairy</string>
+    <string name="key_path_backup">backup</string>
+    <string name="key_path_log">log</string>
+    <string name="key_file_name_log">log.dat</string>
+    <string name="key_path_cache">cache</string>
+    <string name="sp_key_"></string>
+    <string name="paTaskTarget">key_save_paTaskTarget</string>
+    <string name="paPlanTarget">key_save_paPlanTarget</string>
+    <string name="saTaskTarget">key_save_saTaskTarget</string>
+    <string name="saPlanTarget">key_save_saPlanTarget</string>
+    <string name="orderCode">key_save_orderCode</string>
+    <string name="orderCodeDate">key_save_orderCodeDate</string>
+
+</resources>

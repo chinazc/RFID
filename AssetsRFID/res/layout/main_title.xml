@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    
+    android:layout_height="52dp"
+    android:background="@drawable/toolbar2" >
+     <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/app_title_left"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:drawableLeft="@drawable/icon_back"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:text="返回" />
+
+
+    <TextView
+        android:layout_marginRight="5dp"
+        android:id="@+id/app_title_right"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="#FFFFFF" 
+        android:textSize="22sp"
+        android:text="保存"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="65dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/app_title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true" 
+                    android:ellipsize="marquee" 
+        android:focusable="true" 
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever" 
+        android:scrollHorizontally="true"
+            android:textColor="#FFFFFF"
+            android:text="移动企业资产管理系统(EMA)"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/app_title_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>

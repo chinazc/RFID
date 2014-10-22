@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 测试环境 -->
+    
+    <string name="ws_sync_service_IP">192.168.22.252:8080</string>
+    <string name="ws_sync_service_port">:8080</string>
+    <string name="ws_service_IP_default">192.168.22.252:8080</string>
+    <string name="ws_nameSpace">http://service.ws.zeroglobal.com</string>
+    <string name="ws_path_Login">/AssetsRFID_Service/services/MobileService?wsdl</string>
+    <string name="ws_method_Ws_Login">WS_Login</string>
+    
+    <string name="ws_method_getAndroidVersion">getAndroidVersion</string>
+    <string name="ws_customerInformationMethod">Ws_CustomerInformation</string>
+    <string name="ws_downloadNewApk">/AssetsRFID_Service/services/MobileService?wsdl</string>
+    <string name="ws_UrlApk">/OnDemand/Version/OnDemand_Android.apk</string>
+    <string name="ws_changePassword_nameSpace">http://service.ws.zeroglobal.com</string>
+    <string name="ws_changePasswordMethod">Ws_ChangePassword</string>
+    <string name="ws_path_changePassword">/AssetsRFID_Service/services/MobileService?wsdl</string>
+    <string name="ws_path_"></string>
+    <string name="ws_method_"></string>  
+ 
+</resources>

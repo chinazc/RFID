@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    style="@style/shape_background_padding"
+    android:orientation="vertical"
+    android:background="@color/red" >
+
+    <include layout="@layout/main_title"/>
+    <LinearLayout
+        android:id="@+id/tab_sync"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:padding="40dp"
+        android:paddingTop="40dp"
+        android:background="@drawable/shape_background"
+        android:orientation="vertical" >
+ 
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tvSynAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="3dip"
+                    android:text="同步地址: "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/split1" />
+                <LinearLayout 
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/etSynAddress"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                     />
+                <Button 
+                    android:id="@+id/btSaveSynAddress"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="保存"
+                    android:paddingLeft="5dip"/>
+                </LinearLayout>
+            </TableRow>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/split" />
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tvUserID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="3dip"
+                    android:text="用户帐号: "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/split1" />
+
+                <EditText
+                    android:id="@+id/etUserID"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="5dip"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" >
+                </EditText>
+            </TableRow>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/split" />
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tvpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="3dip"
+                    android:text="密码: "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/split1" />
+
+                <EditText
+                    android:id="@+id/etpassword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="5dip"
+                    android:password="true"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" >
+                </EditText>
+            </TableRow>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/split" />
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tvSyncType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="3dip"
+                    android:text="同步方式: "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/split1" />
+
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <RadioGroup
+                    android:id="@+id/rgSyncType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dip" >
+
+                    <RadioButton
+                        android:id="@+id/rbSync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SYNC_FORCE"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </RadioButton>
+
+                </RadioGroup>
+
+                </LinearLayout>
+            </TableRow>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/split" />
+        </TableLayout>
+
+        <!-- 耗费时间 -->
+
+        <TextView
+            android:id="@+id/tvElapseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ELAPSE_TIME"
+            android:textColor="@color/black"
+            android:textSize="20dip" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvElapseTimeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dip"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20dip" >
+        </TextView>
+        
+                <!-- 同步进程 -->
+
+        <TextView
+            android:id="@+id/tvSyncProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SYNC_PROGRESS"
+            android:textColor="@color/black"
+            android:textSize="20dip" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvSyncProgressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dip"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20dip" >
+        </TextView>
+
+        <!-- 同步结果 -->
+
+        <TextView
+            android:id="@+id/tvSyncResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="8dip"
+            android:layout_y="152dip"
+            android:text="@string/SYNC_RESULT"
+            android:textColor="@color/black"
+            android:textSize="20dip" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvSyncResultValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dip"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20dip" >
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>

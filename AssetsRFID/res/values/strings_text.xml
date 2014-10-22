@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_menu">菜单</string>
+    <string name="text_sync_settings">同步设置</string>
+    <string name="text_app_update">版本更新</string>
+    <string name="text_data_backup">数据备份</string>
+    <string name="text_data_restore">数据还原</string>
+    <string name="text_data_init">系统初始</string>
+    <string name="text_alter_password">修改密码</string>
+    <string name="text_use_project">使用设计</string>
+    <string name="text_customer_info">店家信息</string>
+    <string name="text_product_info">产品信息</string>
+    <string name="text_sync_info">同步信息</string>
+    <string name="text_version_info">版本信息</string>
+    
+    <string name="text_add_order">输入订单</string>
+    <string name="text_today_order">今日销量</string>
+    <string name="text_search_order">历史查询</string>
+    <string name="text_yesterday_sales">产品管理</string>
+    <string name="text_product_amount">公司公告</string>
+    <string name="text_customer_amount">单店金额</string>
+    <string name="text_report">报表统计</string>
+    <string name="text_forecast_defend">预报维护</string>
+    <string name="text_forecast_report">预报报表</string>
+    <string name="text_sign">签到签退</string>
+    <string name="text_order_up">订单上传</string>
+    <string name="text_data_sync">数据同步</string>
+    
+    <string name="text_order_category">全部</string>
+    <string name="text_order_symbol">,</string>
+    
+    <string name="text_order_amount">订单金额：</string>
+    <string name="text_delivered_title">日到货：</string>
+    <string name="text_order_amount_base">元</string>
+    <string name="text_order_alert_not_exist">不适用</string>
+    
+    <string name="text_update_rogram">检查更新</string>
+    <string name="text_backup">备份</string>
+    <string name="text_restore">还原</string>
+    <string name="text_unknown_err">未知异常</string>
+    
+    <string name="text_date_backup_name">BrightDairy_backup.zip</string>
+</resources>
